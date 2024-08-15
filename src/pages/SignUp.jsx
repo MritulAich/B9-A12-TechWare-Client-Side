@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
 
-    
+
     const handleSignUp = e => {
         e.preventDefault();
         const form = new FormData(e.currentTarget);
@@ -50,7 +50,7 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Photo</span>
                             </label>
-                            <input type="file" className="input input-bordered" required />
+                            <input type="file" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
