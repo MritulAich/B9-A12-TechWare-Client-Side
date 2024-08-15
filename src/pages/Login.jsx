@@ -1,6 +1,26 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
+	const {signIn, signInWithGoogle} = useContext(AuthContext);
+	const notify = () => toast.error("Sorry! Infos are not matching");
+
+	const handleLogin = e =>{
+		e.preventDefault();
+		const form = new FormData(e.currentTarget);
+		const email = form.get('email');
+		const password = form.get('password');
+
+		signIn(email, password)
+		.then(res=>{
+			console.log(res.user);
+			toast('Successfully logged in')
+		})
+		.catch(err => { notify() })
+	}
     return (
 		<div className="flex bg-[#fbf3ec] justify-center">
         <div className="w-full max-w-xl p-4 rounded-md  sm:p-8  dark:text-gray-800">
@@ -22,7 +42,7 @@ const Login = () => {
 		<p className="px-3 dark:text-gray-600">OR</p>
 		<hr  className="w-full dark:text-gray-600" />
 	</div>
-	<form noValidate="" action="" className="space-y-8">
+	<form onSubmit={handleLogin} className="space-y-8">
 		<div className="space-y-4">
 			<div className="space-y-2">
 				<label htmlFor="email" className="block ">Email address</label>
@@ -38,6 +58,7 @@ const Login = () => {
 		<button type="button" className="btn w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign in</button>
 	</form>
 </div>
+<ToastContainer/>
 </div>
     );
 };
