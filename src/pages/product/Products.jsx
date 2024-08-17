@@ -29,7 +29,7 @@ const Products = () => {
                             <p>{product.timestamp}</p>
                             
                             <div className="text-center">
-                              {/* <Link to={`/viewDetails/${spot._id}`}><button className="btn btn-primary">View details</button></Link> */}
+                              <Link to={`/productDetails/${product._id}`}><button className="btn btn-primary">View details</button></Link>
                             </div>
                         </div>
                     </div>)
