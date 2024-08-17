@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from "react-helmet";
 
 const Login = () => {
 	const { signIn, signInWithGoogle } = useContext(AuthContext);
@@ -68,6 +69,9 @@ const Login = () => {
 					<button className="btn w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign in</button>
 				</form>
 			</div>
+			<Helmet>
+                <title>Login</title>
+            </Helmet>
 			<ToastContainer />
 		</div>
 	);

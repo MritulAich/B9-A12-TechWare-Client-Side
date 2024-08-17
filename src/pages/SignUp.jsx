@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
@@ -65,6 +66,9 @@ const SignUp = () => {
                     <h2>Have an account? Go to <Link to='/login' className="font-bold">Login</Link></h2>
                 </div>
                 <ToastContainer />
+                <Helmet>
+                <title>Registration</title>
+            </Helmet>
             </div>
         </div>
     );
