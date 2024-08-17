@@ -1,5 +1,6 @@
 import { FaSortAmountUp } from "react-icons/fa";
 import useProducts from "../hooks/useProducts";
+import { IoTriangle } from "react-icons/io5";
 
 const Featured = () => {
 
@@ -17,10 +18,13 @@ const Featured = () => {
                         <div className="flex flex-row card bg-base-100 w-full shadow-lg p-2" key={item._id}>
                             <img className="w-[120px] rounded-md mx-4" src={item.image_url} />
                             <div>
-                                <h3>Name: <span className="text-lg font-medium">{item.name}</span></h3>
+                                <h3>Name: <button className="text-lg font-medium">{item.name}</button></h3>
                                 <h3><span className="underline">Tags:</span> <div className="font-medium grid  grid-cols-1">{item.tags[0]}, {item.tags[1]}, {item.tags[2]}</div></h3>
                             </div>
-                            <div className="mx-4"><span className="underline">Added on:</span> {new Date(item.timestamp).toLocaleString()}</div>
+                            <div className="mx-4 flex flex-col gap-3">
+                                <div className=""><span className="underline">Added on:</span> {new Date(item.timestamp).toLocaleString()}</div>
+                                <button className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>
+                            </div>
                         </div>
                     )
                 }
