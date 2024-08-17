@@ -9,7 +9,7 @@ const Featured = () => {
     const featuredProducts = latestProducts.slice(0, 4);
 
     return (
-        <div>
+        <div className="my-20">
             <h1 className="text-3xl border-b-2 border-b-gray-400 mx-auto text-center md:w-4/12 my-8">Featured Products :</h1>
             <p className="font-medium text-lg">Sorted by latest products- <FaSortAmountUp/></p>
             <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-10 mt-4 mx-4">
