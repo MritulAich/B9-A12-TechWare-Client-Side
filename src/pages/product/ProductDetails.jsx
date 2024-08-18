@@ -2,10 +2,14 @@ import { Helmet } from "react-helmet";
 import { IoTriangle } from "react-icons/io5";
 import { MdOutlineReport } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
+import { Rating } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
+import { useState } from "react";
 
 const ProductDetails = () => {
 
     const product = useLoaderData();
+    const [rating, setRating] = useState(0);
 
     return (
         <div className="bg-base-200">
@@ -26,7 +30,7 @@ const ProductDetails = () => {
                 </div>
             </div>
 
-                <h3 className="text-xl text-center border-b-2 border-b-gray-300 mx-auto md:w-4/12 my-4">What people say about it-</h3>
+            <h3 className="text-2xl text-center border-b-2 border-b-gray-300 mx-auto md:w-4/12 my-4">What people say about it-</h3>
             <div className="flex flex-col lg:flex-row md:flow-row ">
                 <div className="card bg-amber-100 shadow-lg container flex flex-col w-full max-w-lg p-4 mb-10 mx-auto divide-y divide-gray-600 rounded-md dark:text-gray-800">
                     <div className="flex justify-between p-4">
@@ -58,6 +62,48 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     <p>{product.reviews[1].comment}</p>
+                </div>
+            </div>
+
+
+            <div className="hero bg-base-200 pb-10">
+                <div>
+                    <h1 className="text-2xl underline font-semibold mb-2">Post a review :-</h1>
+                    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                        <form className="card-body">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Name :</span>
+                                </label>
+                                <input type="name" name="name" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Image :</span>
+                                </label>
+                                <input type="file" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Description :</span>
+                                </label>
+                                <input type="text" name="description" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text"><Rating
+                                        style={{ maxWidth: 180 }}
+                                        value={rating}
+                                        onChange={setRating}
+                                        isRequired
+                                    /></span>
+                                </label>
+                            </div>
+                            <div className="form-control mt-6">
+                                <button className="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
