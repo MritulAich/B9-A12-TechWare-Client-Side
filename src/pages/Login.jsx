@@ -34,7 +34,7 @@ const Login = () => {
 
 	return (
 		<div className="flex bg-[#fbf3ec] justify-center">
-			<div className="w-full max-w-xl p-4 rounded-md  sm:p-8  dark:text-gray-800">
+			<div className="w-full max-w-xl p-4 rounded-md mb-20 sm:p-8  dark:text-gray-800">
 				<h2 className="mb-3 mt-24 text-3xl font-semibold text-center">Login to your account</h2>
 				<p className="text-sm text-center dark:text-gray-600">Don't have account?
 					<Link to='/signUp' className="focus:underline hover:underline"> Sign up here</Link>
@@ -56,12 +56,12 @@ const Login = () => {
 				<form onSubmit={handleLogin} className="space-y-8">
 					<div className="space-y-4">
 						<div className="space-y-2">
-							<label htmlFor="email" className="block ">Email address</label>
+							<label htmlFor="email" className="block text-xl">Email address :</label>
 							<input type="email" name="email" id="email" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
 						</div>
 						<div className="space-y-2">
 							<div className="flex justify-between">
-								<label htmlFor="password" className="">Password</label>
+								<label htmlFor="password" className="text-xl">Password :</label>
 							</div>
 							<input type="password" name="password" id="password" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
 						</div>

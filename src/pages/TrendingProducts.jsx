@@ -17,7 +17,7 @@ const TrendingProducts = () => {
                         <div className="flex flex-row card bg-base-100 w-full shadow-lg p-2" key={item._id}>
                             <img className="w-[120px] rounded-md mx-4" src={item.image_url} />
                             <div>
-                                <h3>Name: <button className="text-lg font-medium">{item.name}</button></h3>
+                                <Link to={`/productDetails/${item._id}`}><h3>Name: <button className="text-xl mb-2 font-medium">{item.name}</button></h3></Link>
                                 <h3><span className="underline">Tags:</span> <div className="font-medium italic grid grid-cols-1">{item.tags[0]}, {item.tags[1]}, {item.tags[2]}</div></h3>
                             </div>
                             <div className="mx-4 flex flex-col gap-3">
