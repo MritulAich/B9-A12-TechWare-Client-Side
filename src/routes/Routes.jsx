@@ -13,6 +13,7 @@ import MyProfile from "./dashboard/user/MyProfile";
 import AddProduct from "./dashboard/user/AddProduct";
 import MyProducts from "./dashboard/user/MyProducts";
 import PrivateRoute from "./PrivateRoute";
+import Payment from "./dashboard/user/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
             {
                 path:'myProducts',
                 element:<MyProducts></MyProducts>
+            },
+            {
+                path: 'payment',
+                element: <Payment></Payment>
             }
         ]
     }

@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { MdVerifiedUser } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 
 const MyProfile = () => {
     const {user} = useContext(AuthContext);
@@ -12,7 +14,9 @@ const MyProfile = () => {
                 <img src={user.photoURL} alt="You don't have profile image" />
                 <h4>{user.email}</h4>
             </div>
-            <h2 className="text-xl">To be a member of <span className="font-semibold">TechWare</span> family, subscribe <button className="text-lg btn btn-info">$20</button></h2>
+            <h2 className="text-xl">To be a member of <span className="font-semibold">TechWare</span> family, subscribe 
+            <Link to='/dashboard/payment' className="text-lg btn btn-info">$20</Link></h2>
+
             <h3 className="text-lg flex flex-row items-center">User Membership Status: <span className="bg-green-400 border-2 font-medium"> Verified</span><MdVerifiedUser /></h3>
         </div>
     );
