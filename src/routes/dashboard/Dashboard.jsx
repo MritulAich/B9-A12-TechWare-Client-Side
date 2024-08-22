@@ -22,7 +22,9 @@ const Dashboard = () => {
                     </li>
                 </ul>
             </div>
-            <Outlet></Outlet>
+            <div className="flex-1 p-8">
+                <Outlet></Outlet>
+            </div>
         </div>
     );
 };

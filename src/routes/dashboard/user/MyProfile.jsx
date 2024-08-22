@@ -9,7 +9,7 @@ const MyProfile = () => {
 
     return (
         <div className="ml-12 space-y-3">
-            <h1 className="text-xl text-center underline mt-4"><span className="font-semibold">{user?.displayName}</span>'s profile</h1>
+            <h1 className="text-xl text-center underline mt-4"><span className="font-semibold">{user.displayName}</span>'s profile</h1>
             <div>
                 <img src={user.photoURL} alt="You don't have profile image" />
                 <h4>{user.email}</h4>
