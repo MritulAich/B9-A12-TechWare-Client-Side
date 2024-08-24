@@ -43,7 +43,6 @@ const MyProducts = () => {
                             <td>{product.upvote_count}</td>
                             <td>Pending</td>
                             <td>
-                                {/* Add actions like Update or Delete here */}
                                 {/* <button onClick={() => handleUpdate(product._id)} className="btn btn-accent">Update</button> */}
                                 {/* <button onClick={() => handleDelete(product._id)} className="btn btn-neutral">Delete</button> */}
                             </td>

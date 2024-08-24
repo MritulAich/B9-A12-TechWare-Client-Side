@@ -1,6 +1,7 @@
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
-import { MdAddchart, MdOutlineStoreMallDirectory } from "react-icons/md";
+import { GoCodeReview, GoReport } from "react-icons/go";
+import { MdAddchart, MdManageAccounts, MdOutlineStoreMallDirectory } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
@@ -20,6 +21,20 @@ const Dashboard = () => {
                     <li>
                         <NavLink to='/'><FaHome></FaHome>Home</NavLink>
                     </li>
+
+
+                    <li>
+                        <NavLink to='/dashboard/productReview'><GoCodeReview/>Product Review</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/dashboard/reportedContents'><GoReport/>Reported Contents</NavLink>
+                    </li>
+
+
+                    <li>
+                        <NavLink to='/dashboard/manageUsers'><MdManageAccounts/>Manage Users</NavLink>
+                    </li>
+
                 </ul>
             </div>
             <div className="flex-1 p-8">

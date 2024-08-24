@@ -15,14 +15,14 @@ const ProductDetails = () => {
         <div className="bg-base-200">
             <div className="flex flex-col lg:flex-row justify-center gap-10 p-6">
                 <div className="mt-20">
-                    <img className="rounded-xl w-60" src={product.image_url} />
+                    <img className="rounded-xl w-60" src={product?.image_url} />
                 </div>
                 <div className="lg:mt-20">
-                    <h2 className="text-2xl font-semibold text-center mb-3">{product.name}</h2>
-                    <p>Tags: <span className="font-semibold italic">{product.tags[0]}, {product.tags[1]}, {product.tags[2]}</span></p>
-                    <p className="text-lg my-1">{product.description}</p>
-                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product.upvote_count}</span></p>
-                    <p className="hover:underline my-1"><a href={product.external_link}>Click to discover more.. </a></p>
+                    <h2 className="text-2xl font-semibold text-center mb-3">{product?.name}</h2>
+                    <p>Tags: <span className="font-semibold italic">{product?.tags[0]}, {product?.tags[1]}, {product?.tags[2]}</span></p>
+                    <p className="text-lg my-1">{product?.description}</p>
+                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product?.upvote_count}</span></p>
+                    <p className="hover:underline my-1"><a href={product?.external_link}>Click to discover more.. </a></p>
                     <div className="flex flex-row justify-evenly">
                         <button className="btn btn-outline my-1"><IoTriangle />UpVote</button>
                         <button className="btn btn-outline btn-error">Report<MdOutlineReport /></button>
@@ -36,32 +36,32 @@ const ProductDetails = () => {
                     <div className="flex justify-between p-4">
                         <div className="flex space-x-4">
                             <img src="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500" />
-                            <h4 className="font-medium text-xl">{product.reviews[0].user}</h4>
+                            <h4 className="font-medium text-xl">{product?.reviews[0].user}</h4>
                         </div>
                         <div className="flex items-center space-x-2 dark:text-yellow-700">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current">
                                 <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
                             </svg>
-                            <span className="text-xl font-bold">{product.reviews[0].rating}</span>
+                            <span className="text-xl font-bold">{product?.reviews[0].rating}</span>
                         </div>
                     </div>
-                    <p>{product.reviews[0].comment}</p>
+                    <p>{product?.reviews[0].comment}</p>
                 </div>
 
                 <div className="card bg-amber-100 shadow-lg container flex flex-col w-full max-w-lg p-4 mb-10 mx-auto divide-y divide-gray-600 rounded-md dark:text-gray-800">
                     <div className="flex justify-between p-4">
                         <div className="flex space-x-4">
                             <img src="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500" />
-                            <h4 className="font-medium text-xl">{product.reviews[1].user}</h4>
+                            <h4 className="font-medium text-xl">{product?.reviews[1].user}</h4>
                         </div>
                         <div className="flex items-center space-x-2 dark:text-yellow-700">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current">
                                 <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
                             </svg>
-                            <span className="text-xl font-bold">{product.reviews[1].rating}</span>
+                            <span className="text-xl font-bold">{product?.reviews[1].rating}</span>
                         </div>
                     </div>
-                    <p>{product.reviews[1].comment}</p>
+                    <p>{product?.reviews[1].comment}</p>
                 </div>
             </div>
 

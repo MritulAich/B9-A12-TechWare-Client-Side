@@ -10,17 +10,19 @@ const AddProduct = () => {
     const handleAddProduct = event => {
         event.preventDefault();
         const form = event.target;
-        const product = form.product.value;
-        const photo = form.photo.value;
-        const description = form.description.value;
-        const tags = form.tags.value;
-        const links = form.links.value;
         const name = form.name.value;
-        const email = form.email.value;
-        const img = form.img.value;
-
+        const image_url = form.image_url.value;
+        const description = form.description.value;
+        const tagsList = form.tags.value;
+        const external_link = form.external_link.value;
+        const owner = form.owner.value;
+        const owner_email = form.owner_email.value;
+        const owner_img = form.owner_img.value;
+ 
+        const tags = tagsList.split(',').map(tag => tag.trim());
+        
         const newProduct = {
-            photo, product, description, tags, links, img, name, email,
+            name, image_url, description, tags, external_link, owner, owner_email, owner_img,
             timestamp: new Date()
         }
         console.log(newProduct);
@@ -56,24 +58,24 @@ const AddProduct = () => {
                 <div className="flex lg:flex-row md:flex-row flex-col gap-8">
                     <div className="">
                         <p>Product Name :</p>
-                        <input type="text" name="product" className="input input-bordered mb-3" required/>
+                        <input type="text" name="name" className="input input-bordered mb-3" required/>
                         <p>Product Image :</p>
-                        <input type="url" name="photo" placeholder="type url" className="input mb-3 input-bordered w-56" required/><br />
+                        <input type="url" name="image_url" placeholder="type url" className="input mb-3 input-bordered w-56" required/><br />
                         <p>Description :</p>
                         <input type="text" name="description" className="input input-bordered mb-3" required/>
                         <p>Tags :</p>
-                        <input type="text" name="tags" className="input input-bordered mb-3" />
+                        <input type="text" name="tags" placeholder="e.g. Web App, Productivity, Task Management" className="input input-bordered mb-3" />
                     </div>
 
                     <div className="">
                         <p>External Links :</p>
-                        <input type="url" name="links" className="input input-bordered mb-3" />
+                        <input type="url" name="external_link" className="input input-bordered mb-3" />
                         <p>Owner name :</p>
-                        <input type="text" name="name" disabled defaultValue={user.displayName} className="input input-bordered mb-3" required/>
+                        <input type="text" name="owner" disabled defaultValue={user.displayName} className="input input-bordered mb-3" required/>
                         <p>Owner email :</p>
-                        <input type="email" name="email" disabled defaultValue={user.email} className="input input-bordered mb-3" required/>
+                        <input type="email" name="owner_email" disabled defaultValue={user.email} className="input input-bordered mb-3" required/>
                         <p>Owner img :</p>
-                        <input type="url" name="img" disabled defaultValue={user.photoURL} className="input mb-3 input-bordered" required/>
+                        <input type="url" name="owner_img" disabled defaultValue={user.photoURL} className="input mb-3 input-bordered" required/>
                     </div>
                 </div>
 

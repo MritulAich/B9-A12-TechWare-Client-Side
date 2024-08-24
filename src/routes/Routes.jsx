@@ -14,6 +14,9 @@ import AddProduct from "./dashboard/user/AddProduct";
 import MyProducts from "./dashboard/user/MyProducts";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./dashboard/user/Payment";
+import ProductReviewQueue from "./dashboard/moderator/ProductReviewQueue";
+import ReportedContents from "./dashboard/moderator/ReportedContents";
+import ManageUsers from "./dashboard/admin/ManageUsers";
 
 export const router = createBrowserRouter([
     {
@@ -66,7 +69,24 @@ export const router = createBrowserRouter([
                 path:'myProducts',
                 element:<MyProducts></MyProducts>,
                 // loader: ({params})=> fetch(`http://localhost:5000/products/${params.id}`)
+            },
+
+            //moderator routes
+            {
+                path: 'productReview',
+                element: <ProductReviewQueue></ProductReviewQueue>
+            },
+            {
+                path: 'reportedContents',
+                element:<ReportedContents></ReportedContents>
+            },
+
+            //admin
+            {
+                path: 'manageUsers',
+                element:<ManageUsers></ManageUsers>
             }
+
         ]
     }
 ]);
