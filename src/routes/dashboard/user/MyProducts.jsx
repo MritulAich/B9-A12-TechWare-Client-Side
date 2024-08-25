@@ -1,28 +1,37 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../providers/AuthProvider";
-import { useLoaderData } from "react-router-dom";
-import axios from "axios";
+import Swal from "sweetalert2";
+import useCart from "../../../hooks/useCart";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyProducts = () => {
-    const {user} = useContext(AuthContext);
-    // const products = useLoaderData();
-    const [products, setProducts] = useState([]);
+    const [product, refetch] = useCart();
+    const axiosSecure = useAxiosSecure();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            if (user?.email) {
-                try {
-                    const response = await axios.get(`http://localhost:5000/user/products?email=${user.email}`);
-                    setProducts(response.data);
-                } catch (error) {
-                    console.error("Failed to fetch products:", error);
-                }
+    
+    const handleDelete = _id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Be sure to delete this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/payments/${_id}`)
+                .then(res => {
+                    if (res.data.deletedCount > 0) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your product has been deleted.",
+                            icon: "success"
+                        });
+                        refetch();
+                    }
+                })
             }
-        };
-
-        fetchProducts();
-    }, [user?.email]);
-
+        });
+    }
 
     return (
         <div className='lg:m-5 md:m-3 mt-6'>
@@ -32,19 +41,19 @@ const MyProducts = () => {
                         <th>Product Name</th>
                         <th>Vote Numbers</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    {products.map(product => (
-                        <tr key={product._id} className="hover">
-                            <td>{product.name}</td>
-                            <td>{product.upvote_count}</td>
+                    {product.map(item => (
+                        <tr key={item._id} className="hover">
+                            <td>{item.name}</td>
+                            <td>{item.upvote_count}</td>
                             <td>Pending</td>
                             <td>
-                                {/* <button onClick={() => handleUpdate(product._id)} className="btn btn-accent">Update</button> */}
-                                {/* <button onClick={() => handleDelete(product._id)} className="btn btn-neutral">Delete</button> */}
+                                {/* <button onClick={() => handleUpdate(item._id)} className="btn btn-accent">Update</button> */}
+                                <button onClick={() => handleDelete(item._id)} className="btn btn-neutral">Delete</button>
                             </td>
                         </tr>
                     ))}

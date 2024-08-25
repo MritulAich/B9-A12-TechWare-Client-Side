@@ -37,7 +37,7 @@ const Login = () => {
 			<div className="w-full max-w-xl p-4 rounded-md mb-20 sm:p-8  dark:text-gray-800">
 				<h2 className="mb-3 mt-24 text-3xl font-semibold text-center">Login to your account</h2>
 				<p className="text-sm text-center dark:text-gray-600">Don't have account?
-					<Link to='/signUp' className="focus:underline hover:underline"> Sign up here</Link>
+					<Link to='/signUp' className="focus:underline hover:underline text-lg font-medium"> Sign up here</Link>
 				</p>
 				<div className="my-6 space-y-4">
 					<button onClick={handleGoogle} aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-4 border-2 rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-800 focus:dark:ring-violet-600">
@@ -57,13 +57,13 @@ const Login = () => {
 					<div className="space-y-4">
 						<div className="space-y-2">
 							<label htmlFor="email" className="block text-xl">Email address :</label>
-							<input type="email" name="email" id="email" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
+							<input type="email" name="email" id="email" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" required/>
 						</div>
 						<div className="space-y-2">
 							<div className="flex justify-between">
 								<label htmlFor="password" className="text-xl">Password :</label>
 							</div>
-							<input type="password" name="password" id="password" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" />
+							<input type="password" name="password" id="password" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600" required/>
 						</div>
 					</div>
 					<button className="btn w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign in</button>

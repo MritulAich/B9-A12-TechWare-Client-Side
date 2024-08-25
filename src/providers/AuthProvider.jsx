@@ -12,6 +12,7 @@ const provider = new GoogleAuthProvider;
 const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     const axiosPublic = useAxiosPublic();
 
     const createUser = (email, password)=>{
@@ -41,6 +42,7 @@ const AuthProvider = ({children}) => {
             }else{
                 localStorage.removeItem('access-token')
             }
+            setLoading(false)
         });
 
         return()=>{
@@ -52,6 +54,7 @@ const AuthProvider = ({children}) => {
     
     const authInfo = {
         user,
+        loading,
         createUser,
         signIn,
         signInWithGoogle,

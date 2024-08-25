@@ -58,7 +58,7 @@ const ProductReviewQueue = () => {
                     <tr className="text-lg">
                         <th>Name</th>
                         <th>View Details</th>
-                        <th>Actions</th>
+                        <th>Option</th>
                         <th>Actions</th>
                         <th>Actions</th>
                     </tr>
