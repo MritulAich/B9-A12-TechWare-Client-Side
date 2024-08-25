@@ -1,11 +1,27 @@
 import { IoTriangle } from "react-icons/io5";
 import useProducts from "../hooks/useProducts";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const TrendingProducts = () => {
     const [products] = useProducts();
     const topProducts = products.sort((a,b)=> b.upvote_count - a.upvote_count);
     const trendingProducts = topProducts.slice(0, 6);
+
+    const [upVotes, setUpVotes] = useState({});
+    const [clickedProducts, setClickedProducts] = useState({});
+
+    const handleUpVote = (productId) => {
+        setUpVotes((prevUpVotes) => ({
+            ...prevUpVotes,
+            [productId]: (prevUpVotes[productId] || 0) + 1
+        }));
+        setClickedProducts((prevClickedProducts) => ({
+            ...prevClickedProducts,
+            [productId]: true
+        }));
+    };
+
 
     return (
         <div className="my-20">
@@ -21,8 +37,13 @@ const TrendingProducts = () => {
                                 <h3><span className="underline">Tags:</span> <div className="font-medium italic grid grid-cols-1">{item.tags[0]}, {item.tags[1]}, {item.tags[2]}</div></h3>
                             </div>
                             <div className="mx-4 flex flex-col gap-3">
-                                <div className=""><span className="underline">Vote count: {item.upvote_count}</span></div>
-                                <button className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>
+                                <div className="underline">Vote Count: {item.upvote_count + (upVotes[item._id] || 0)}</div>
+                                <button 
+                                onClick={() => handleUpVote(item._id)} 
+                                disabled={clickedProducts[item._id]} 
+                                className="btn btn-outline btn-info">
+                                <IoTriangle /> UpVote
+                            </button>
                             </div>
                         </div>
                     )

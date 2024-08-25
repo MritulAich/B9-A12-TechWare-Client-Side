@@ -20,9 +20,10 @@ const AddProduct = () => {
         const owner_img = form.owner_img.value;
  
         const tags = tagsList.split(',').map(tag => tag.trim());
-        
+        const _id = new Date().getTime().toString();
+
         const newProduct = {
-            name, image_url, description, tags, external_link, owner, owner_email, owner_img,
+            _id ,name, image_url, description, tags, external_link, owner, owner_email, owner_img,
             timestamp: new Date()
         }
         console.log(newProduct);

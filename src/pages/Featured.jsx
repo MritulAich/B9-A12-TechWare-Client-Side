@@ -1,14 +1,18 @@
 import { FaSortAmountUp } from "react-icons/fa";
 import useProducts from "../hooks/useProducts";
 import { IoTriangle } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Featured = () => {
-
+    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [products] = useProducts();
     const latestProducts = products.sort((a, b)=> new Date(b.timestamp) - new Date(a.timestamp));
     const featuredProducts = latestProducts.slice(0, 4);
 
+    
     return (
         <div className="my-20">
             <h1 className="text-3xl border-b-2 border-b-gray-400 mx-auto text-center md:w-4/12 my-8">Featured Products :</h1>

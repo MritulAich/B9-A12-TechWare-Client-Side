@@ -10,6 +10,13 @@ const ProductDetails = () => {
 
     const product = useLoaderData();
     const [rating, setRating] = useState(0);
+    const [upVote, setUpVote] = useState(0);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleUpVote=()=>{
+        setUpVote(upVote+1);
+        setIsClicked(true)
+    }
 
     return (
         <div className="bg-base-200">
@@ -21,10 +28,10 @@ const ProductDetails = () => {
                     <h2 className="text-2xl font-semibold text-center mb-3">{product?.name}</h2>
                     <p>Tags: <span className="font-semibold italic">{product?.tags[0]}, {product?.tags[1]}, {product?.tags[2]}</span></p>
                     <p className="text-lg my-1">{product?.description}</p>
-                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product?.upvote_count}</span></p>
+                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product.upvote_count +upVote}</span></p>
                     <p className="hover:underline my-1"><a href={product?.external_link}>Click to discover more.. </a></p>
                     <div className="flex flex-row justify-evenly">
-                        <button className="btn btn-outline my-1"><IoTriangle />UpVote</button>
+                        <button onClick={handleUpVote} disabled={isClicked} className="btn btn-outline my-1"><IoTriangle />UpVote</button>
                         <button className="btn btn-outline btn-error">Report<MdOutlineReport /></button>
                     </div>
                 </div>

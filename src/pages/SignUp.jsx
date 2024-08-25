@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
@@ -41,8 +41,8 @@ const SignUp = () => {
                     })
             })
 
-        if (password.length < 6) {
-            alert('Password must contain minimum 6 characters')
+        if (data.password.length < 6) {
+            toast('Password must contain minimum 6 characters')
         }
         else (toast('You have registered successfully'));
     }
@@ -77,8 +77,7 @@ const SignUp = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input type="password" {...register("password", { required: true })}
-                            placeholder="Password" className="input input-bordered" required />
-                            {errors.password?.type === 'minLength' && <span>Password must contain minimum 6 characters</span>}
+                                placeholder="Password" className="input input-bordered" required />
                         </div>
                         <div className="form-control mt-6">
                         </div>

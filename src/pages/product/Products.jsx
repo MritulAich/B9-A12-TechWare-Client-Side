@@ -6,6 +6,19 @@ import { Link } from "react-router-dom";
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [upVotes, setUpVotes] = useState({});
+    const [clickedProducts, setClickedProducts] = useState({});
+
+    const handleUpVote = (productId) => {
+        setUpVotes((prevUpVotes) => ({
+            ...prevUpVotes,
+            [productId]: (prevUpVotes[productId] || 0) + 1
+        }));
+        setClickedProducts((prevClickedProducts) => ({
+            ...prevClickedProducts,
+            [productId]: true
+        }));
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -56,8 +69,13 @@ const Products = () => {
                             </Link>
                             <Link to={`/productDetails/${product._id}`}><h2 className="text-2xl font-semibold">{product.name}</h2></Link>
                             <p>Tags: <span className="font-semibold italic">{product.tags[0]}, {product.tags[1]}, {product.tags[2]}</span></p>
-                            <p>UpVote Count: {product.upvote_count}</p>
-                            <button className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>
+                            <p>UpVote Count: {product.upvote_count + (upVotes[product._id] || 0)}</p>
+                            <button 
+                                onClick={() => handleUpVote(product._id)} 
+                                disabled={clickedProducts[product._id]} 
+                                className="btn btn-outline btn-info">
+                                <IoTriangle /> UpVote
+                            </button>
                         </div>
                     ))}
                 </div>
