@@ -12,6 +12,7 @@ import Dashboard from "./dashboard/Dashboard";
 import MyProfile from "./dashboard/user/MyProfile";
 import AddProduct from "./dashboard/user/AddProduct";
 import MyProducts from "./dashboard/user/MyProducts";
+import UpdateProduct from "./dashboard/user/UpdateProduct";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "./dashboard/user/Payment";
 import ProductReviewQueue from "./dashboard/moderator/ProductReviewQueue";
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'productDetails/:id',
-                element: <ProductDetails></ProductDetails>,
+                element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>,
                 loader: ({params})=> fetch(`http://localhost:5000/products/${params.id}`)
             }
         ]
@@ -69,6 +70,11 @@ export const router = createBrowserRouter([
             {
                 path:'myProducts',
                 element:<MyProducts></MyProducts>
+            },
+            {
+                path:'updateProduct/:id',
+                element:<UpdateProduct></UpdateProduct>,
+                loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
             },
 
             //moderator routes

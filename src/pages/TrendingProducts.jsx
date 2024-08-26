@@ -1,9 +1,12 @@
 import { IoTriangle } from "react-icons/io5";
 import useProducts from "../hooks/useProducts";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 const TrendingProducts = () => {
+    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [products] = useProducts();
     const topProducts = products.sort((a,b)=> b.upvote_count - a.upvote_count);
     const trendingProducts = topProducts.slice(0, 6);
@@ -21,7 +24,9 @@ const TrendingProducts = () => {
             [productId]: true
         }));
     };
-
+    const handleNavigate=()=>{
+        navigate('/login')
+    }
 
     return (
         <div className="my-20">
@@ -38,12 +43,15 @@ const TrendingProducts = () => {
                             </div>
                             <div className="mx-4 flex flex-col gap-3">
                                 <div className="underline">Vote Count: {item.upvote_count + (upVotes[item._id] || 0)}</div>
-                                <button 
+                                {user ? <button 
                                 onClick={() => handleUpVote(item._id)} 
                                 disabled={clickedProducts[item._id]} 
                                 className="btn btn-outline btn-info">
                                 <IoTriangle /> UpVote
-                            </button>
+                                 </button>
+                                : <button onClick={handleNavigate} className="btn btn-outline btn-info">
+                                <IoTriangle /> UpVote
+                            </button>}
                             </div>
                         </div>
                     )

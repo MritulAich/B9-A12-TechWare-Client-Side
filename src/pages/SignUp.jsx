@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth"; // Import updateProfile
 
 const SignUp = () => {
     const { createUser } = useContext(AuthContext);
@@ -14,38 +15,45 @@ const SignUp = () => {
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
-
-    const onSubmit = data => {
+    const onSubmit = (data) => {
         createUser(data.email, data.password)
-            .then(res => {
-                console.log(res.user);
-                const userInfo = {
-                    name: data.name,
-                    email: data.email,
-                    photo: data.url,
-                    password: data.password
-                }
-                axiosPublic.post('/members', userInfo)
-                    .then(res => {
-                        if (res.data.insertedId) {
-                            reset();
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Member created successfully',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            navigate('/');
-                        }
-                    })
+            .then((res) => {
+                const user = res.user;
+                return updateProfile(user, {
+                    displayName: data.displayName,
+                    photoURL: data.photoURL,
+                }).then(() => {
+                    const userInfo = {
+                        displayName: data.displayName,
+                        email: data.email,
+                        photoURL: data.photoURL,
+                        password: data.password
+                    };
+                    return axiosPublic.post('/members', userInfo);
+                }).then(res => {
+                    if (res.data.insertedId) {
+                        reset();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Member created successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/');
+                    }
+                })
             })
+            .catch((error) => {
+                console.error(error);
+            });
 
         if (data.password.length < 6) {
-            toast('Password must contain minimum 6 characters')
+            toast('Password must contain minimum 6 characters');
+        } else {
+            toast('You have registered successfully');
         }
-        else (toast('You have registered successfully'));
-    }
+    };
 
     return (
         <div className="flex justify-center  bg-[#fbf3ec]">
@@ -58,7 +66,7 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="text" {...register("name", { required: true })} placeholder="Name" className="input input-bordered" required />
+                            <input type="text" {...register("displayName", { required: true })} placeholder="Name" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
                             <label className="label">
@@ -70,7 +78,7 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Photo</span>
                             </label>
-                            <input type="url" {...register("url", { required: true })} className="input input-bordered" />
+                            <input type="url" placeholder="type url" {...register("photoURL", { required: true })} className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">

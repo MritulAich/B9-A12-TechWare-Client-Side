@@ -2,7 +2,7 @@ import { FaSortAmountUp } from "react-icons/fa";
 import useProducts from "../hooks/useProducts";
 import { IoTriangle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Featured = () => {
@@ -12,6 +12,22 @@ const Featured = () => {
     const latestProducts = products.sort((a, b)=> new Date(b.timestamp) - new Date(a.timestamp));
     const featuredProducts = latestProducts.slice(0, 4);
 
+    const [upVotes, setUpVotes] = useState({});
+    const [clickedProducts, setClickedProducts] = useState({});
+
+    const handleUpVote = (productId) => {
+        setUpVotes((prevUpVotes) => ({
+            ...prevUpVotes,
+            [productId]: (prevUpVotes[productId] || 0) + 1
+        }));
+        setClickedProducts((prevClickedProducts) => ({
+            ...prevClickedProducts,
+            [productId]: true
+        }));
+    };
+    const handleNavigate=()=>{
+        navigate('/login')
+    }
     
     return (
         <div className="my-20">
@@ -29,7 +45,15 @@ const Featured = () => {
                             </div>
                             <div className="mx-4 flex flex-col gap-3">
                                 <div><span className="underline">Added on:</span> {new Date(item.timestamp).toLocaleString()}</div>
-                                <button className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>
+                                {user ? <button 
+                                onClick={() => handleUpVote(item._id)} 
+                                disabled={clickedProducts[item._id]} 
+                                className="btn btn-outline btn-info">
+                                <IoTriangle />UpVote
+                                 </button>
+                                : <button onClick={handleNavigate} className="btn btn-outline btn-info">
+                                <IoTriangle />UpVote
+                            </button>}
                             </div>
                         </div>
                     )

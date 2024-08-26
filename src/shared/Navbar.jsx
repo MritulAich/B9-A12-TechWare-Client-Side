@@ -54,7 +54,7 @@ const Navbar = () => {
         {
           user ?
             <div className="dropdown">
-              <div tabIndex={0} role="button" className="btn m-1"><img className="w-16" src={user?.photoURL}></img></div>
+              <div tabIndex={0} role="button" className="btn m-1 bg-slate-400"><img className="w-16" src={user?.photoURL}></img></div>
               <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>{user?.displayName}</li>
                 <li><Link to='/dashboard'>Dashboard</Link></li>

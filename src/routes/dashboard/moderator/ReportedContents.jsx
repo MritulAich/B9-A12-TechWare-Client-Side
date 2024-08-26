@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const ReportedContents = () => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/reports')
             .then(res => res.json())
             .then(data => setProducts(data));
     }, []);
@@ -22,7 +22,7 @@ const ReportedContents = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/products/${_id}`, {
+                fetch(`http://localhost:5000/reports/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -43,7 +43,7 @@ const ReportedContents = () => {
     }
     
     return (
-        <div className='lg:m-5 md:m-3 mt-6'>
+        <div className='lg:m-5 md:m-3 mt-6 ml-[-20px] mr-[-20px]'>
             <table className="table">
                 <thead>
                     <tr className="lg:text-lg md:text-lg">

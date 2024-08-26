@@ -1,74 +1,118 @@
 import { Helmet } from "react-helmet";
 import { IoTriangle } from "react-icons/io5";
 import { MdOutlineReport } from "react-icons/md";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
-
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
     const product = useLoaderData();
     const [rating, setRating] = useState(0);
     const [upVote, setUpVote] = useState(0);
     const [isClicked, setIsClicked] = useState(false);
+    const axiosSecure = useAxiosSecure();
 
-    const handleUpVote=()=>{
-        setUpVote(upVote+1);
+    const handleUpVote = () => {
+        setUpVote(upVote + 1);
         setIsClicked(true)
     }
+    const handleNavigate = () => {
+        navigate('/login')
+    }
+    const handleReportSubmit = () => {
+        const _id = new Date().getTime().toString();
+        const reportProduct = {
+            _id,
+            email: user.email,
+            name: product.name,
+        }
+        axiosSecure.post('/reports', reportProduct)
+            .then(res => {
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: 'success',
+                        title: 'this product has been reported',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+
+    }
+
+    const handleReviewSubmit = () => {
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Thanks for tour review",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
 
     return (
         <div className="bg-base-200">
             <div className="flex flex-col lg:flex-row justify-center gap-10 p-6">
                 <div className="mt-20">
-                    <img className="rounded-xl w-60" src={product?.image_url} />
+                    <img className="rounded-xl lg:w-60 md:w-60 w-36" src={product?.image_url} />
                 </div>
                 <div className="lg:mt-20">
                     <h2 className="text-2xl font-semibold text-center mb-3">{product?.name}</h2>
                     <p>Tags: <span className="font-semibold italic">{product?.tags[0]}, {product?.tags[1]}, {product?.tags[2]}</span></p>
                     <p className="text-lg my-1">{product?.description}</p>
-                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product.upvote_count +upVote}</span></p>
+                    <p>Up vote count: <span className="text-lg font-semibold text-red-500">{product.upvote_count + upVote}</span></p>
                     <p className="hover:underline my-1"><a href={product?.external_link}>Click to discover more.. </a></p>
                     <div className="flex flex-row justify-evenly">
-                        <button onClick={handleUpVote} disabled={isClicked} className="btn btn-outline my-1"><IoTriangle />UpVote</button>
-                        <button className="btn btn-outline btn-error">Report<MdOutlineReport /></button>
+
+                        {user ? <button onClick={handleUpVote} disabled={isClicked} className="btn btn-outline my-1"><IoTriangle />UpVote</button>
+                            : <button onClick={handleNavigate} className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>}
+
+                        <button onClick={handleReportSubmit} className="btn btn-outline btn-error">Report<MdOutlineReport /></button>
+
                     </div>
                 </div>
             </div>
 
             <h3 className="text-2xl text-center border-b-2 border-b-gray-300 mx-auto md:w-4/12 my-4">What people say about it-</h3>
-            <div className="flex flex-col lg:flex-row md:flow-row ">
+            <div className="flex flex-col lg:flex-row md:flow-row mx-6">
                 <div className="card bg-amber-100 shadow-lg container flex flex-col w-full max-w-lg p-4 mb-10 mx-auto divide-y divide-gray-600 rounded-md dark:text-gray-800">
                     <div className="flex justify-between p-4">
                         <div className="flex space-x-4">
                             <img src="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500" />
-                            <h4 className="font-medium text-xl">{product?.reviews[0].user}</h4>
+                            <h4 className="font-medium text-xl">{product?.reviews?.[0]?.user}</h4>
                         </div>
                         <div className="flex items-center space-x-2 dark:text-yellow-700">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current">
                                 <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
                             </svg>
-                            <span className="text-xl font-bold">{product?.reviews[0].rating}</span>
+                            <span className="text-xl font-bold">{product?.reviews?.[0]?.rating}</span>
                         </div>
                     </div>
-                    <p>{product?.reviews[0].comment}</p>
+                    <p>{product?.reviews?.[0]?.comment}</p>
                 </div>
 
                 <div className="card bg-amber-100 shadow-lg container flex flex-col w-full max-w-lg p-4 mb-10 mx-auto divide-y divide-gray-600 rounded-md dark:text-gray-800">
                     <div className="flex justify-between p-4">
                         <div className="flex space-x-4">
                             <img src="" className="object-cover w-12 h-12 rounded-full dark:bg-gray-500" />
-                            <h4 className="font-medium text-xl">{product?.reviews[1].user}</h4>
+                            <h4 className="font-medium text-xl">{product?.reviews?.[1]?.user}</h4>
                         </div>
                         <div className="flex items-center space-x-2 dark:text-yellow-700">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current">
                                 <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
                             </svg>
-                            <span className="text-xl font-bold">{product?.reviews[1].rating}</span>
+                            <span className="text-xl font-bold">{product?.reviews?.[1]?.rating}</span>
                         </div>
                     </div>
-                    <p>{product?.reviews[1].comment}</p>
+                    <p>{product?.reviews?.[1]?.comment}</p>
                 </div>
             </div>
 
@@ -77,18 +121,18 @@ const ProductDetails = () => {
                 <div>
                     <h1 className="text-2xl underline font-semibold mb-2">Post a review :-</h1>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                        <form className="card-body">
+                        <form onSubmit={handleReviewSubmit} className="card-body">
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Name :</span>
+                                    <span className="label-text">Reviewer Name :</span>
                                 </label>
-                                <input type="name" name="name" className="input input-bordered" required />
+                                <input type="name" name="name" disabled defaultValue={user.displayName} className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Image :</span>
+                                    <span className="label-text">Reviewer Image :</span>
                                 </label>
-                                <input type="file" className="input input-bordered" required />
+                                <input type="url" disabled defaultValue={user.photoURL} className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">

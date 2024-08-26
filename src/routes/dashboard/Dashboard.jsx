@@ -7,8 +7,8 @@ import { NavLink, Outlet } from "react-router-dom";
 const Dashboard = () => {
     return (
         <div className="flex">
-            <div className="w-64 min-h-full bg-slate-300">
-                <ul className="menu p-4 text-xl">
+            <div className="lg:w-64 md:w-64 w-36 min-h-min bg-slate-300 ">
+                <ul className="menu lg:p-4 p-2 lg:text-xl md:text-xl text-lg">
                     <li>
                         <NavLink to='/dashboard/myProfile'><CgProfile />My Profile</NavLink>
                     </li>

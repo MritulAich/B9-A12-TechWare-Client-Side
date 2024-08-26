@@ -1,12 +1,17 @@
 import Swal from "sweetalert2";
-import useCart from "../../../hooks/useCart";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyProducts = () => {
-    const [product, refetch] = useCart();
+    const [products, setProducts] = useState([]);
     const axiosSecure = useAxiosSecure();
+    useEffect(() => {
+        fetch('http://localhost:5000/myProducts')
+            .then(res => res.json())
+            .then(data => setProducts(data));
+    }, []);
 
-    
     const handleDelete = _id => {
         Swal.fire({
             title: "Are you sure?",
@@ -16,25 +21,31 @@ const MyProducts = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/payments/${_id}`)
-                .then(res => {
-                    if (res.data.deletedCount > 0) {
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your product has been deleted.",
-                            icon: "success"
-                        });
-                        refetch();
-                    }
-                })
+                try {
+                    const deleteProduct = await axiosSecure.delete(`/products/${_id}`);
+                    if (deleteProduct.data.deletedCount > 0) {
+                        const deleteMyProduct = await axiosSecure.delete(`/myProducts/${_id}`);
+                        if (deleteMyProduct.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your product has been deleted.",
+                                icon: "success"
+                            });
+                            const updatedProducts = products.filter(product => product._id !== _id);
+                            setProducts(updatedProducts)
+                        } } 
+                }catch (error) {
+                    console.log(error);
+                }
             }
         });
     }
+    
 
     return (
-        <div className='lg:m-5 md:m-3 mt-6'>
+        <div className='lg:m-5 md:m-3 lg:mt-6 md:mt-6 m-[-20px]'>
             <table className="table">
                 <thead>
                     <tr className="lg:text-lg md:text-lg">
@@ -46,14 +57,14 @@ const MyProducts = () => {
                 </thead>
 
                 <tbody>
-                    {product.map(item => (
+                    {products.map(item => (
                         <tr key={item._id} className="hover">
                             <td>{item.name}</td>
-                            <td>{item.upvote_count}</td>
+                            <td>0</td>
                             <td>Pending</td>
                             <td>
-                                {/* <button onClick={() => handleUpdate(item._id)} className="btn btn-accent">Update</button> */}
-                                <button onClick={() => handleDelete(item._id)} className="btn btn-neutral">Delete</button>
+                                <Link to={`/dashboard/updateProduct/${item._id}`} className="btn btn-accent">Update</Link>
+                                <button onClick={() => handleDelete(item._id)} className="btn btn-neutral ml-2 mt-1">Delete</button>
                             </td>
                         </tr>
                     ))}

@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { IoTriangle } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Products = () => {
+    const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [upVotes, setUpVotes] = useState({});
@@ -19,6 +22,9 @@ const Products = () => {
             [productId]: true
         }));
     };
+    const handleNavigate=()=>{
+        navigate('/login')
+    }
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -41,7 +47,7 @@ const Products = () => {
     return (
         <div className="flex">
             <div className="mt-20">
-                <label className="input input-bordered flex items-center w-[400px] gap-2 my-6 mx-auto">
+                <label className="input input-bordered flex items-center w-[400px] gap-2 my-6 mx-auto ml-6">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"
@@ -61,7 +67,7 @@ const Products = () => {
                     />
                 </label>
 
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ml-6 gap-6">
                     {products.map(product => (
                         <div key={product._id} className="card w-96 bg-base-100 shadow-xl p-8 space-y-4">
                             <Link to={`/productDetails/${product._id}`}>
@@ -70,12 +76,13 @@ const Products = () => {
                             <Link to={`/productDetails/${product._id}`}><h2 className="text-2xl font-semibold">{product.name}</h2></Link>
                             <p>Tags: <span className="font-semibold italic">{product.tags[0]}, {product.tags[1]}, {product.tags[2]}</span></p>
                             <p>UpVote Count: {product.upvote_count + (upVotes[product._id] || 0)}</p>
-                            <button 
+                            {user ? <button 
                                 onClick={() => handleUpVote(product._id)} 
                                 disabled={clickedProducts[product._id]} 
                                 className="btn btn-outline btn-info">
                                 <IoTriangle /> UpVote
                             </button>
+                                :<button onClick={handleNavigate} className="btn btn-outline btn-info"><IoTriangle /> UpVote</button>}
                         </div>
                     ))}
                 </div>

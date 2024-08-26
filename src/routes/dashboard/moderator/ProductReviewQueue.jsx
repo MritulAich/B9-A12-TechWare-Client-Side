@@ -51,11 +51,12 @@ const ProductReviewQueue = () => {
         });
     };
 
+
     return (
-        <div className='lg:m-5 md:m-3 mt-6'>
+        <div className='lg:m-5 md:m-3 m-[-30px]'>
             <table className="table">
                 <thead>
-                    <tr className="text-lg">
+                    <tr className="lg:text-lg">
                         <th>Name</th>
                         <th>View Details</th>
                         <th>Option</th>
