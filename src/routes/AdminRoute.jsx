@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 
 
@@ -7,8 +6,6 @@ const AdminRoute = ({ children }) => {
 
     if(isAdmin){
         return children;
-    }else{
-        return <Navigate to='/login'></Navigate>
     }
 
 };

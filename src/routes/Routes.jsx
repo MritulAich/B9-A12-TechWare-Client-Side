@@ -19,6 +19,7 @@ import ProductReviewQueue from "./dashboard/moderator/ProductReviewQueue";
 import ReportedContents from "./dashboard/moderator/ReportedContents";
 import ManageUsers from "./dashboard/admin/ManageUsers";
 import AdminRoute from "./AdminRoute";
+import ModeratorRoute from "./ModeratorRoute";
 
 export const router = createBrowserRouter([
     {
@@ -80,17 +81,17 @@ export const router = createBrowserRouter([
             //moderator routes
             {
                 path: 'productReview',
-                element: <ProductReviewQueue></ProductReviewQueue>
+                element: <ModeratorRoute><ProductReviewQueue></ProductReviewQueue></ModeratorRoute>
             },
             {
                 path: 'reportedContents',
-                element:<ReportedContents></ReportedContents>
+                element:<ModeratorRoute><ReportedContents></ReportedContents></ModeratorRoute>
             },
 
-            //admin
+            //admin route
             {
                 path: 'manageUsers',
-                element:<ManageUsers></ManageUsers> 
+                element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute> 
             }
 
         ]

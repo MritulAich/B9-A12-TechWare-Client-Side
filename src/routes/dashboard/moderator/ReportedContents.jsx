@@ -2,43 +2,45 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ReportedContents = () => {
-    const [products, setProducts] = useState([]);
+    const [reports, setReports] = useState([]);
+    const axiosSecure = useAxiosSecure();
     useEffect(() => {
         fetch('http://localhost:5000/reports')
             .then(res => res.json())
-            .then(data => setProducts(data));
+            .then(data => setReports(data));
     }, []);
 
     const handleDelete = _id => {
         Swal.fire({
             title: "Are you sure?",
-            text: "Be sure to delete this!",
+            text: "Be sure to remove this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+            confirmButtonText: "Yes, remove it!"
+        }).then(async (result) => {
             if (result.isConfirmed) {
-
-                fetch(`http://localhost:5000/reports/${_id}`, {
-                    method: 'DELETE'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data);
-                        if (data.deletedCount > 0) {
+                try {
+                    // const deleteProduct = await axiosSecure.delete(`/products/${_id}`);
+                    // if (deleteProduct.data.deletedCount > 0) {
+                        const deleteReport = await axiosSecure.delete(`/reports/${_id}`);
+                        if (deleteReport.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "The product has been deleted.",
+                                text: "This product has been deleted.",
                                 icon: "success"
-                            })
-                            const remaining = products.filter(cof => cof._id !== _id);
-                            setProducts(remaining)
-                        }
-                    })
+                            });
+                            const updatedProducts = products.filter(product => product._id !== _id);
+                            setProducts(updatedProducts)
+                        } } 
+                    // }
+                        catch (error) {
+                    console.log(error);
+                }
             }
         });
     }
@@ -55,7 +57,7 @@ const ReportedContents = () => {
                 </thead>
 
                 <tbody>
-                    {products.map(product => (
+                    {reports?.map(product => (
                         <tr key={product._id} className="hover">
                             <td>{product.name}</td>
                             <td>
