@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -97,6 +98,9 @@ const ProductReviewQueue = () => {
                     ))}
                 </tbody>
             </table>
+            <Helmet>
+                <title>Moderator | Product Review</title>
+            </Helmet>
         </div>
     );
 };

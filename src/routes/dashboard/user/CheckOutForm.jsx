@@ -4,6 +4,7 @@ import useCart from "../../../hooks/useCart";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const CheckOutForm = () => {
     const [error, setError] = useState('');
@@ -114,6 +115,9 @@ const CheckOutForm = () => {
             <p className='text-red-600'>{error}</p>
 
             {transactionId && <p className='text-green-600'>Your transaction id: {transactionId}</p>}
+            <Helmet>
+                <title>Card Payment</title>
+            </Helmet>
         </form>
     );
 };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -34,7 +35,7 @@ const ReportedContents = () => {
                                 text: "The product has been deleted.",
                                 icon: "success"
                             })
-                            const remaining = spots.filter(cof => cof._id !== _id);
+                            const remaining = products.filter(cof => cof._id !== _id);
                             setProducts(remaining)
                         }
                     })
@@ -67,6 +68,9 @@ const ReportedContents = () => {
                     ))}
                 </tbody>
             </table>
+            <Helmet>
+                <title>Moderator | Reported Contents</title>
+            </Helmet>
         </div>
     );
 };

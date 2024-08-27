@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { MdVerifiedUser } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 
 const MyProfile = () => {
@@ -18,6 +19,9 @@ const MyProfile = () => {
             <Link to='/dashboard/payment' className="lg:text-xl text-lg btn btn-info">$20</Link></h2>
 
             <h3 className="text-lg flex flex-row items-center">User Membership Status: <span className="bg-green-400 border-2 font-medium"> Verified</span><MdVerifiedUser /></h3>
+            <Helmet>
+                <title>User | My Profile</title>
+            </Helmet>
         </div>
     );
 };

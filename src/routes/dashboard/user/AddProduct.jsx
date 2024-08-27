@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../providers/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
@@ -89,6 +90,9 @@ const AddProduct = () => {
                     <button className="btn btn-accent w-52 lg:w-96 md:w-96 mt-6 text-lg">Submit</button>
                 </div>
             </form>
+            <Helmet>
+                <title>User | Add Products</title>
+            </Helmet>
         </div>
     );
 };

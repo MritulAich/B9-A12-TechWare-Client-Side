@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const MyProducts = () => {
     const [products, setProducts] = useState([]);
@@ -70,6 +71,9 @@ const MyProducts = () => {
                     ))}
                 </tbody>
             </table>
+            <Helmet>
+                <title>User | My Products</title>
+            </Helmet>
         </div>
     );
 };

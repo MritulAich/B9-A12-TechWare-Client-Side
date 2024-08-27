@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
             //admin
             {
                 path: 'manageUsers',
-                element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute> 
+                element:<ManageUsers></ManageUsers> 
             }
 
         ]

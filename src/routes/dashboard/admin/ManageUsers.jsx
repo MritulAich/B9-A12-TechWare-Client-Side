@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
 import useAdmin from '../../../hooks/useAdmin';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet';
 
 const ManageUsers = () => {
-    // const [isAdmin] = useAdmin();
-    // if (!isAdmin) {
-    //     return <p>You do not have access to this page.</p>;
-    // }
+    const [isAdmin, isLoading] = useAdmin();
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+    if (!isAdmin) {
+        return <p>You do not have access to this page.</p>;
+    }
+
     const axiosSecure = useAxiosSecure();
 
-    const { data: members = [], refetch} = useQuery({
+    const { data: members = [], refetch } = useQuery({
         queryKey: ['members'],
         queryFn: async () => {
             const res = await axiosSecure.get('/members');
@@ -19,21 +24,21 @@ const ManageUsers = () => {
         }
     })
 
-    const handleMakeAdmin = member =>{
+    const handleMakeAdmin = member => {
         axiosSecure.patch(`/members/admin/${member._id}`)
-        .then(res=>{
-            console.log(res.data);
-            if(res.data.modifiedCount > 0){
-                refetch();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: `${member.name} is an Admin now`,
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-            }
-        })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "the user is an Admin now",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     const handleDeleteMember = member => {
@@ -83,7 +88,7 @@ const ManageUsers = () => {
                                 <td>{member.name}</td>
                                 <td>{member.email}</td>
                                 <td>
-                                    {member.role === 'admin'? 'admin' : <button onClick={() => handleMakeAdmin(member)}
+                                    {member.role === 'admin' ? 'admin' : <button onClick={() => handleMakeAdmin(member)}
                                         className="btn btn-ghost btn-lg text-red-600">
                                     </button>}
                                 </td>
@@ -97,6 +102,9 @@ const ManageUsers = () => {
                     </tbody>
                 </table>
             </div>
+            <Helmet>
+                <title>Admin | Manage Users</title>
+            </Helmet>
         </div>
     );
 };
